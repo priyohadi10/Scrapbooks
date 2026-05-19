@@ -10,14 +10,6 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // Check for auth token on protected routes
-  if (pathname.startsWith('/editor') || pathname.startsWith('/settings')) {
-    const token = request.cookies.get('sb-auth-token')?.value;
-    if (!token && process.env.NODE_ENV === 'production') {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-  }
-
   return response;
 }
 
